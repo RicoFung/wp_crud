@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">   
+
+
+<mapper namespace="com.wp.entity.TbDemo">
+      <!-- 自动生成id策略 -->
+    <insert id="add" parameterType="com.wp.entity.TbDemo" useGeneratedKeys="true" keyProperty="id">  
+       	insert into tb_demo 
+       	( tc_rowid, tc_pic, tc_name, tc_price, tc_date) 
+       	values
+       	( #{tcRowid}, #{tcPic}, #{tcName}, #{tcPrice}, #{tcDate})
+    </insert>  
+	
+	<delete id="del" parameterType="com.wp.entity.TbDemo">
+		delete from tb_demo
+		 where tc_rowid = #{tcRowid}  	  
+	</delete>
+	
+	<update id="upd" parameterType="com.wp.entity.TbDemo">
+		update tb_demo set
+	           tc_pic = #{tcPic}, 
+	           tc_name = #{tcName}, 
+	           tc_price = #{tcPrice}, 
+	           tc_date = #{tcDate} 
+         where tc_rowid = #{tcRowid}  	        
+	</update>
+  	
+	<resultMap type="com.wp.entity.TbDemo" id="result">
+        <result property="tcRowid" column="tc_rowid"/>
+        <result property="tcPic" column="tc_pic"/>
+        <result property="tcName" column="tc_name"/>
+        <result property="tcPrice" column="tc_price"/>
+        <result property="tcDate" column="tc_date"/>
+	</resultMap>
+  	
+	<sql id="columns">
+		t.tc_rowid, t.tc_pic, t.tc_name, t.tc_price, t.tc_date 
+	</sql>
+	
+	<sql id="order">
+		<choose>
+			<when test="@chok.devwork.Ognl@isNotEmpty(sort)">
+				order by tt.<include refid="orderParse1"/> ${order}
+			</when>
+			<when test="@chok.devwork.Ognl@isNotEmpty(multiSort) and @chok.devwork.Ognl@isEmpty(sort)">
+				order by <foreach collection="multiSort" index="index" item="item" separator=",">tt.<include refid="orderParse2" /> ${item.sortOrder}</foreach>  
+			</when>
+		</choose>
+	</sql>
+	<sql id="orderParse1">
+		<if test="sort == 'tcRowid'">tc_rowid</if>
+		<if test="sort == 'tcPic'">tc_pic</if>
+		<if test="sort == 'tcName'">tc_name</if>
+		<if test="sort == 'tcPrice'">tc_price</if>
+		<if test="sort == 'tcDate'">tc_date</if>
+	</sql>
+	<sql id="orderParse2">
+		<if test="item.sortName == 'tcRowid'">tc_rowid</if>
+		<if test="item.sortName == 'tcPic'">tc_pic</if>
+		<if test="item.sortName == 'tcName'">tc_name</if>
+		<if test="item.sortName == 'tcPrice'">tc_price</if>
+		<if test="item.sortName == 'tcDate'">tc_date</if>
+	</sql>
+	
+	<sql id="page">
+		<if test="@chok.devwork.Ognl@isNotEmpty(offset) and @chok.devwork.Ognl@isNotEmpty(limit)"> limit #{offset,javaType=String,jdbcType=NUMERIC}, #{limit,javaType=String,jdbcType=NUMERIC} </if>
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<where>	      				
+	       <if test="@chok.devwork.Ognl@isNotEmpty(tcPic)"> and t.tc_pic like concat('%',#{tcPic},'%')</if>
+	       <if test="@chok.devwork.Ognl@isNotEmpty(tcName)"> and t.tc_name like concat('%',#{tcName},'%')</if>
+	       <if test="@chok.devwork.Ognl@isNotEmpty(tcPrice)"> and t.tc_price like concat('%',#{tcPrice},'%')</if>
+	       <if test="@chok.devwork.Ognl@isNotEmpty(tcDate)"> and t.tc_date like concat('%',#{tcDate},'%')</if>
+	       <if test="@chok.devwork.Ognl@isNotEmpty(search)"> and (t.tc_pic like concat('%',#{search},'%') or t.tc_name like concat('%',#{search},'%') or t.tc_price like concat('%',#{search},'%') or t.tc_date like concat('%',#{search},'%'))</if>	
+		</where>
+	</sql>	
+	
+	<select id="get" resultMap="result">
+		select <include refid="columns"/> 
+		  from tb_demo t 
+		 where tc_rowid = #{tcRowid}  	  
+	</select>
+	
+	<select id="query" resultType="list" resultMap="result">
+		select tt.* from 
+		(
+			select <include refid="columns"/> from tb_demo t
+			<include refid="dynamicWhere" />
+		) tt
+		<include refid="order" />
+		<include refid="page" />
+	</select>
+	
+	<select id="getCount" resultType="int">
+		select count(1) from tb_demo t
+		<include refid="dynamicWhere" />
+	</select>
+</mapper>  
