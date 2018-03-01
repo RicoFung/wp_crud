@@ -68,10 +68,10 @@
 	
 	<sql id="dynamicWhere">
 		<where>	      				
-	       <if test="@chok.devwork.Ognl@isNotEmpty(tcPic)"> and t.tc_pic like concat('%',#{tcPic},'%')</if>
 	       <if test="@chok.devwork.Ognl@isNotEmpty(tcName)"> and t.tc_name like concat('%',#{tcName},'%')</if>
 	       <if test="@chok.devwork.Ognl@isNotEmpty(tcPrice)"> and t.tc_price like concat('%',#{tcPrice},'%')</if>
-	       <if test="@chok.devwork.Ognl@isNotEmpty(tcDate)"> and t.tc_date like concat('%',#{tcDate},'%')</if>
+	       <if test="@chok.devwork.Ognl@isNotEmpty(tcDateFm) and @chok.devwork.Ognl@isNotEmpty(tcTimeFm)"> and t.tc_date &gt;= concat(#{tcDateFm},' ',#{tcTimeFm})</if>
+	       <if test="@chok.devwork.Ognl@isNotEmpty(tcDateTo) and @chok.devwork.Ognl@isNotEmpty(tcTimeTo)"> and t.tc_date &lt;= concat(#{tcDateTo},' ',#{tcTimeTo})</if>
 	       <if test="@chok.devwork.Ognl@isNotEmpty(search)"> and (t.tc_pic like concat('%',#{search},'%') or t.tc_name like concat('%',#{search},'%') or t.tc_price like concat('%',#{search},'%') or t.tc_date like concat('%',#{search},'%'))</if>	
 		</where>
 	</sql>	
