@@ -3,11 +3,11 @@
 
 <mapper namespace="com.admin.entity.TbDemo">
       <!-- 自动生成id策略 -->
-    <insert id="add" parameterType="com.admin.entity.TbDemo" useGeneratedKeys="true" keyProperty="id">  
+    <insert id="add" parameterType="com.admin.entity.TbDemo" useGeneratedKeys="true" keyProperty="tcRowid">  
        	insert into tb_demo 
-       	( tc_rowid, tc_pic, tc_name, tc_price, tc_date) 
+       	( tc_pic, tc_name, tc_price, tc_date) 
        	values
-       	( #{tcRowid}, #{tcPic}, #{tcName}, #{tcPrice}, #{tcDate})
+       	( #{tcPic}, #{tcName}, #{tcPrice}, #{tcDate})
     </insert>  
 	
 	<delete id="del" parameterType="com.admin.entity.TbDemo">
@@ -33,7 +33,7 @@
 	</resultMap>
   	
 	<sql id="columns">
-		t.tc_rowid, t.tc_pic, t.tc_name, t.tc_price, t.tc_date 
+		t.tc_rowid, t.tc_pic, t.tc_name, t.tc_price, date_format(t.tc_date, '%Y-%m-%d %H:%i') tc_date
 	</sql>
 	
 	<sql id="order">
