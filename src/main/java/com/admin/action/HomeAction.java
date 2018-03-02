@@ -1,4 +1,4 @@
-package com.wp.action;
+package com.admin.action;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,13 +15,13 @@ import chok.util.http.HttpUtil;
 
 @Scope("prototype")
 @Controller
-@RequestMapping("/wp/home")
+@RequestMapping("/admin/home")
 public class HomeAction extends BaseController<Object>
 {
 	@RequestMapping("/query")
 	public String query() 
 	{
-		return "/wp/home/query.jsp";
+		return "/admin/home/query.jsp";
 	}
 	
 	@RequestMapping("/searchMenu")

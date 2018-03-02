@@ -1,10 +1,12 @@
-package com.wp.dao;
+package com.admin.dao;
 
 import javax.annotation.Resource;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
+
+import com.admin.entity.TbDemo;
+
 import chok.devwork.springboot.BaseDao;
-import com.wp.entity.TbDemo;
 
 @Repository
 public class TbDemoDao extends BaseDao<TbDemo,Long>

@@ -1,4 +1,4 @@
-package com.wp.entity;
+package com.admin.entity;
 
 /**
  *

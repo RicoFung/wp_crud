@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>  
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">   
 
-
-<mapper namespace="com.wp.entity.TbDemo">
+<mapper namespace="com.admin.entity.TbDemo">
       <!-- 自动生成id策略 -->
-    <insert id="add" parameterType="com.wp.entity.TbDemo" useGeneratedKeys="true" keyProperty="id">  
+    <insert id="add" parameterType="com.admin.entity.TbDemo" useGeneratedKeys="true" keyProperty="id">  
        	insert into tb_demo 
        	( tc_rowid, tc_pic, tc_name, tc_price, tc_date) 
        	values
        	( #{tcRowid}, #{tcPic}, #{tcName}, #{tcPrice}, #{tcDate})
     </insert>  
 	
-	<delete id="del" parameterType="com.wp.entity.TbDemo">
+	<delete id="del" parameterType="com.admin.entity.TbDemo">
 		delete from tb_demo
 		 where tc_rowid = #{tcRowid}  	  
 	</delete>
 	
-	<update id="upd" parameterType="com.wp.entity.TbDemo">
+	<update id="upd" parameterType="com.admin.entity.TbDemo">
 		update tb_demo set
 	           tc_pic = #{tcPic}, 
 	           tc_name = #{tcName}, 
@@ -25,7 +24,7 @@
          where tc_rowid = #{tcRowid}  	        
 	</update>
   	
-	<resultMap type="com.wp.entity.TbDemo" id="result">
+	<resultMap type="com.admin.entity.TbDemo" id="result">
         <result property="tcRowid" column="tc_rowid"/>
         <result property="tcPic" column="tc_pic"/>
         <result property="tcName" column="tc_name"/>

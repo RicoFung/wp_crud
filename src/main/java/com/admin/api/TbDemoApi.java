@@ -1,4 +1,4 @@
-package com.wp.action;
+package com.admin.api;
 
 import java.util.List;
 import java.util.Map;
@@ -8,15 +8,16 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.admin.entity.TbDemo;
+import com.admin.service.TbDemoService;
+
 import chok.devwork.BaseController;
 import chok.util.CollectionUtil;
-import com.wp.service.TbDemoService;
-import com.wp.entity.TbDemo;
 
 @Scope("prototype")
 @Controller
-@RequestMapping("/wp/tbdemo")
-public class TbDemoAction extends BaseController<TbDemo>
+@RequestMapping("/admin/api/tbdemo")
+public class TbDemoApi extends BaseController<TbDemo>
 {
 	@Autowired
 	private TbDemoService service;
@@ -25,7 +26,7 @@ public class TbDemoAction extends BaseController<TbDemo>
 	public String add() 
 	{
 		put("queryParams",req.getParameterValueMap(false, true));
-		return "/wp/tbdemo/add.jsp";
+		return "/admin/tbdemo/add.jsp";
 	}
 	@RequestMapping("/add2")
 	public void add2(TbDemo po) 
@@ -64,7 +65,7 @@ public class TbDemoAction extends BaseController<TbDemo>
 	{
 		put("po", service.get(req.getLong("id")));
 		put("queryParams",req.getParameterValueMap(false, true));
-		return "/wp/tbdemo/upd.jsp";
+		return "/admin/tbdemo/upd.jsp";
 	}
 	@RequestMapping("/upd2")
 	public void upd2(TbDemo po) 
@@ -82,18 +83,17 @@ public class TbDemoAction extends BaseController<TbDemo>
 	}
 
 	@RequestMapping("/get")
-	public String get() 
+	public void get() 
 	{
-		put("po",service.get(req.getLong("id")));
-		put("queryParams",req.getParameterValueMap(false, true));
-		return "/wp/tbdemo/get.jsp";
+		result.put("po", service.get(req.getLong("tcRowid")));
+		printJson(result.getData());
 	}
 
 	@RequestMapping("/query")
 	public String query() 
 	{
 		put("queryParams",req.getParameterValueMap(false, true));
-		return "/wp/tbdemo/query.jsp";
+		return "/admin/tbdemo/query.jsp";
 	}
 	
 	@RequestMapping("/query2")

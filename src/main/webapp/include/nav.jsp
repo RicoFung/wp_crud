@@ -8,7 +8,7 @@ String account = "DEV";
 <script type="text/javascript">
 /* js 全局变量 **********************************************************/
 var $g_menuJson = [
-	{"tc_code":"demo","tc_order":"2-1","tc_app_id":3,"tc_permit_id":27,"pid":0,"id":1,"tc_name":"demo","tc_url":"/wp/tbdemo/query.action"}
+	{"tc_code":"demo","tc_order":"2-1","tc_app_id":3,"tc_permit_id":27,"pid":0,"id":1,"tc_name":"demo","tc_url":"/admin/tbdemo/query.action"}
 	];
 var $g_btnJson = null;
 /************************************************************************/
