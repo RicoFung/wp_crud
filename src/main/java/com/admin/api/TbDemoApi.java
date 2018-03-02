@@ -1,6 +1,5 @@
 package com.admin.api;
 
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,18 +21,20 @@ public class TbDemoApi extends BaseController<TbDemo>
 	@Autowired
 	private TbDemoService service;
 	
-	@RequestMapping("/add2")
-	public void add2(TbDemo po) 
+	@RequestMapping("/add")
+	public void add(TbDemo po) 
 	{
 		try
 		{
 			service.add(po);
-			print("1");
+			printJson(result);
 		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
-			print("0:" + e.getMessage());
+			result.setSuccess(false);
+			result.setMsg(e.getMessage());
+			printJson(result);
 		}
 	}
 	
@@ -54,13 +55,12 @@ public class TbDemoApi extends BaseController<TbDemo>
 		printJson(result);
 	}
 	
-	@RequestMapping("/upd2")
-	public void upd2(TbDemo po) 
+	@RequestMapping("/upd")
+	public void upd(TbDemo po) 
 	{
 		try
 		{
 			service.upd(po);
-			result.setSuccess(true);
 			printJson(result);
 		}
 		catch(Exception e)
@@ -75,24 +75,36 @@ public class TbDemoApi extends BaseController<TbDemo>
 	@RequestMapping("/get")
 	public void get() 
 	{
-		result.put("po", service.get(req.getLong("tcRowid")));
-		printJson(result.getData());
+		try
+		{
+			result.put("po", service.get(req.getLong("tcRowid")));
+			printJson(result);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			result.setSuccess(false);
+			result.setMsg(e.getMessage());
+			printJson(result);
+		}
 	}
 	
-	@RequestMapping("/query2")
-	public void query2()
+	@RequestMapping("/query")
+	public void query()
 	{
-		Map<String, Object> m = req.getParameterValueMap(false, true);
-		result.put("total",service.getCount(m));
-		result.put("rows",service.query(req.getDynamicSortParameterValueMap(m)));
-		printJson(result.getData());
-	}
-	
-	@RequestMapping("/exp")
-	public void exp()
-	{
-		Map<String, Object> m = req.getParameterValueMap(false, true);
-		List<TbDemo> list = service.query(m);
-		exp(list, "xlsx");
+		try
+		{
+			Map<String, Object> m = req.getParameterValueMap(false, true);
+			result.put("total",service.getCount(m));
+			result.put("rows",service.query(req.getDynamicSortParameterValueMap(m)));
+			printJson(result);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			result.setSuccess(false);
+			result.setMsg(e.getMessage());
+			printJson(result);
+		}
 	}
 }
