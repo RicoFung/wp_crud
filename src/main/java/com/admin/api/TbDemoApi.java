@@ -22,12 +22,6 @@ public class TbDemoApi extends BaseController<TbDemo>
 	@Autowired
 	private TbDemoService service;
 	
-	@RequestMapping("/add")
-	public String add() 
-	{
-		put("queryParams",req.getParameterValueMap(false, true));
-		return "/admin/tbdemo/add.jsp";
-	}
 	@RequestMapping("/add2")
 	public void add2(TbDemo po) 
 	{
@@ -60,25 +54,21 @@ public class TbDemoApi extends BaseController<TbDemo>
 		printJson(result);
 	}
 	
-	@RequestMapping("/upd")
-	public String upd() 
-	{
-		put("po", service.get(req.getLong("id")));
-		put("queryParams",req.getParameterValueMap(false, true));
-		return "/admin/tbdemo/upd.jsp";
-	}
 	@RequestMapping("/upd2")
 	public void upd2(TbDemo po) 
 	{
 		try
 		{
 			service.upd(po);
-			print("1");
+			result.setSuccess(true);
+			printJson(result);
 		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
-			print("0:" + e.getMessage());
+			result.setSuccess(false);
+			result.setMsg(e.getMessage());
+			printJson(result);
 		}
 	}
 
@@ -87,13 +77,6 @@ public class TbDemoApi extends BaseController<TbDemo>
 	{
 		result.put("po", service.get(req.getLong("tcRowid")));
 		printJson(result.getData());
-	}
-
-	@RequestMapping("/query")
-	public String query() 
-	{
-		put("queryParams",req.getParameterValueMap(false, true));
-		return "/admin/tbdemo/query.jsp";
 	}
 	
 	@RequestMapping("/query2")

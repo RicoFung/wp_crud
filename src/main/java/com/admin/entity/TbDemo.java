@@ -9,7 +9,7 @@ package com.admin.entity;
 public class TbDemo implements java.io.Serializable
 {
     // tcRowid       db_column: tc_rowid 
-	private java.lang.Integer tcRowid;
+	private java.lang.Long tcRowid;
     // tcPic       db_column: tc_pic 
 	private java.lang.String tcPic;
     // tcName       db_column: tc_name 
@@ -23,7 +23,7 @@ public class TbDemo implements java.io.Serializable
 	}
 
 	public TbDemo(
-		java.lang.Integer tcRowid,
+		java.lang.Long tcRowid,
 		java.lang.String tcPic,
 		java.lang.String tcName,
 		java.lang.Double tcPrice,
@@ -37,12 +37,12 @@ public class TbDemo implements java.io.Serializable
 		this.tcDate = tcDate;
 	}
 
-	public void setTcRowid(java.lang.Integer value) 
+	public void setTcRowid(java.lang.Long value) 
 	{
 		this.tcRowid = value;
 	}
 	
-	public java.lang.Integer getTcRowid() 
+	public java.lang.Long getTcRowid() 
 	{
 		return this.tcRowid;
 	}
