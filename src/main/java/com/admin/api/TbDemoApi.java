@@ -43,7 +43,7 @@ public class TbDemoApi extends BaseController<TbDemo>
 	{
 		try
 		{
-			service.del(CollectionUtil.toLongArray(req.getLongArray("id[]", 0l)));
+			service.del(CollectionUtil.strToLongArray(req.getString("tcRowid"), ","));
 			result.setSuccess(true);
 		}
 		catch(Exception e)
