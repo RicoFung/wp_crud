@@ -3,8 +3,11 @@ package com.webconfig;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+
+import chok.util.PropertiesUtil;
 
 @Configuration
 public class WebMvcConfig extends WebMvcConfigurerAdapter
@@ -15,6 +18,19 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter
 		registry.addViewController("/").setViewName("forward:/index.jsp"); // 设置默认首页(必须加入“forward:”, 否则会访问spring.mvc.view.prefix所指定的目录)
 		super.addViewControllers(registry);
 	}
+	
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+
+        /*
+        * 说明：增加虚拟路径(经过本人测试：在此处配置的虚拟路径，用springboot内置的tomcat时有效，
+        * 用外部的tomcat也有效;所以用到外部的tomcat时不需在tomcat/config下的相应文件配置虚拟路径了,阿里云linux也没问题)
+        */
+        registry
+        .addResourceHandler(PropertiesUtil.getValue("pic.load.path"))
+        .addResourceLocations("file:"+PropertiesUtil.getValue("pic.upload.path"));
+        super.addResourceHandlers(registry);
+    }
 
 	@Bean(name = "multipartResolver")
 	public CommonsMultipartResolver multipartResolver()
