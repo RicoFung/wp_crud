@@ -23,7 +23,7 @@ public class TbPicApi extends BaseController<TbPic>
 	@Autowired
 	private TbPicService service;
 
-	@RequestMapping("/upload")
+ 	@RequestMapping("/upload")
 	public void upload(@RequestParam("myFile") CommonsMultipartFile files[])
 	{
 		try
