@@ -19,18 +19,19 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter
 		super.addViewControllers(registry);
 	}
 	
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-
-        /*
-        * 说明：增加虚拟路径(经过本人测试：在此处配置的虚拟路径，用springboot内置的tomcat时有效，
-        * 用外部的tomcat也有效;所以用到外部的tomcat时不需在tomcat/config下的相应文件配置虚拟路径了,阿里云linux也没问题)
-        */
-        registry
-        .addResourceHandler(PropertiesUtil.getValue("pic.load.path"))
-        .addResourceLocations("file:"+PropertiesUtil.getValue("pic.upload.path"));
-        super.addResourceHandlers(registry);
-    }
+//	用于非nginx环境
+//    @Override
+//    public void addResourceHandlers(ResourceHandlerRegistry registry) 
+//    {
+//        /*
+//        * 说明：增加虚拟路径(经过本人测试：在此处配置的虚拟路径，用springboot内置的tomcat时有效，
+//        * 用外部的tomcat也有效;所以用到外部的tomcat时不需在tomcat/config下的相应文件配置虚拟路径了,阿里云linux也没问题)
+//        */
+//        registry
+//        .addResourceHandler(PropertiesUtil.getValue("pic.load.path"))
+//        .addResourceLocations("file:"+PropertiesUtil.getValue("pic.upload.path"));
+//        super.addResourceHandlers(registry);
+//    }
 
 	@Bean(name = "multipartResolver")
 	public CommonsMultipartResolver multipartResolver()

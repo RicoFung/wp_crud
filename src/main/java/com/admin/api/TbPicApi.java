@@ -1,8 +1,5 @@
 package com.admin.api;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -14,6 +11,7 @@ import com.admin.entity.TbPic;
 import com.admin.service.TbPicService;
 
 import chok.devwork.BaseController;
+import chok.util.CollectionUtil;
 
 @Scope("prototype")
 @Controller
@@ -28,12 +26,24 @@ public class TbPicApi extends BaseController<TbPic>
 	{
 		try
 		{
-			// 上传
 			service.upload(files, req.getLong("tcDemoRowid"));
-			// 返回列表
-			Map<String, Object> m = new HashMap<String, Object>();
-			m.put("tcDemoRowid", req.getLong("tcDemoRowid"));
-			result.put("rows", service.query(m));
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			result.setSuccess(false);
+			result.setMsg(e.getMessage());
+		}
+		printJson(result);
+	}
+
+ 	@RequestMapping("/del")
+	public void del()
+	{
+		try
+		{
+			service.del(CollectionUtil.strToLongArray(req.getString("tcRowid"), ","));
+			result.setSuccess(true);
 		}
 		catch(Exception e)
 		{

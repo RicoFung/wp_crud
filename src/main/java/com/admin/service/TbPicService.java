@@ -2,10 +2,6 @@ package com.admin.service;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,31 +30,34 @@ public class TbPicService extends BaseService<TbPic,Long>
 	
 	public void upload(CommonsMultipartFile files[], Long tcDemoRowid) throws IOException
 	{
-		String picName = tcDemoRowid+"_"+files[0].getOriginalFilename();
 		//保存到db
 		TbPic po = new TbPic();
-		po.setTcDemoRowid(tcDemoRowid);
-		po.setTcName(picName);
 		dao.add(po);
+		po.setTcDemoRowid(tcDemoRowid);
+		po.setTcName(po.getTcRowid()+"_"+po.getTcDemoRowid()+"_"+files[0].getOriginalFilename());
+		dao.upd(po);
 		//保存到硬盘
 		File srcFile = FileUtil.multipartFileToFile(files[0]);
-		File destFile = new File(PropertiesUtil.getValue("pic.upload.path"), picName);
+		File destFile = new File(PropertiesUtil.getValue("pic.upload.path"), po.getTcName());
 		FileUtils.copyFile(srcFile, destFile);
 	}
 	
-	/**
-	 * 删除硬盘图片
-	 * @param tcDemoRowid
-	 * @throws IOException
-	 */
-//	private void delPicFileByTcDemoRowid(Long tcDemoRowid) throws IOException 
-//	{
-//		Map<String, Object> m = new HashMap<String, Object>();
-//		List<TbPic> list = dao.query(m);
-//		for(int i=0; i<list.size(); i++)
-//		{
-//			File f = new File(list.get(i).getTcName());
-//			if(f.exists()) FileUtils.forceDelete(f);
-//		}
-//	}
+	@Override
+	public void del(Long[] tcRowids)
+	{
+		try 
+		{
+			for(Long tcRowid: tcRowids)
+			{
+				TbPic po = dao.get(tcRowid);
+				File f = new File(PropertiesUtil.getValue("pic.upload.path")+po.getTcName());
+				if(f.exists()) FileUtils.forceDelete(f);
+				dao.del(tcRowid);
+			}
+		} 
+		catch (IOException e) 
+		{
+			e.printStackTrace();
+		}
+	}
 }
