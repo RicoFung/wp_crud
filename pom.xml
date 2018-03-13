@@ -3,7 +3,7 @@
 	 <!--本Project識別-->
 	<groupId>com.wp</groupId>
 	<artifactId>wp_crud</artifactId>
-	<version>0.1</version>
+	<version>1.0</version>
 	<!--表示打包Project的型態,可能為Jar、war、ear或pom，若是使用了android 則為apk-->
 	<packaging>war</packaging>
 	<!--以下是給工具看的,主要是本Project的資訊-->
@@ -87,6 +87,8 @@
 		<dependency><groupId>org.apache.poi</groupId><artifactId>poi-scratchpad</artifactId><version>${poi.version}</version></dependency>
 		<!-- cas client  -->
 		<dependency><groupId>org.jasig.cas.client</groupId><artifactId>cas-client-core</artifactId><version>3.4.1</version><exclusions><exclusion><groupId>javax.servlet</groupId><artifactId>servlet-api</artifactId></exclusion></exclusions></dependency>
+		<!-- rico-framework chok -->
+		<dependency><groupId>rico.framework</groupId><artifactId>chok</artifactId><version>1.0</version></dependency>
 	</dependencies>
 	<!-- maven 打包插件 -->
 	<build>
